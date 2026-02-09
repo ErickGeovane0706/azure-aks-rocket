@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendendo Azure AKS</title>
+    <style>
+        /* Reset e Configuração Básica */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #0f0c29; /* Cor de fundo base */
+            /* Gradiente para o espaço profundo */
+            background: -webkit-linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+            background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Títulos */
+        .container {
+            text-align: center;
+            z-index: 10; /* Garante que o texto fique sobre o fundo */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(0, 120, 212, 0.8);
+        }
+
+        h1 span {
+            color: #0078D4; /* Azul Azure */
+            font-weight: 800;
+        }
+
+        p.subtitle {
+            font-size: 1.2rem;
+            color: #b0c4de;
+            margin-top: 0;
+        }
+
+        /* Área da Ilustração SVG */
+        .illustration-container {
+            width: 80%;
+            max-width: 500px;
+            height: auto;
+            margin-top: 30px;
+            /* Animação sutil de flutuação */
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Estrelas de fundo (feitas com CSS para simplicidade) */
+        .stars, .stars2, .stars3 {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Pequenos pontos brancos espalhados */
+        .stars { background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, #fff, transparent), radial-gradient(2px 2px at 50px 160px, #ddd, transparent), radial-gradient(2px 2px at 90px 40px, #fff, transparent), radial-gradient(2px 2px at 130px 80px, #fff, transparent), radial-gradient(2px 2px at 160px 120px, #ddd, transparent); background-size: 200px 200px; animation: twinkle 5s infinite; }
+        .stars2 { background-image: radial-gradient(2px 2px at 100px 150px, #fff, transparent), radial-gradient(2px 2px at 200px 50px, #eee, transparent), radial-gradient(2px 2px at 300px 250px, #fff, transparent); background-size: 350px 350px; animation: twinkle 7s infinite; }
+
+        @keyframes twinkle {
+            0% { opacity: 0.8; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.8; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="stars2"></div>
+
+<div class="container">
+    <h1>Aprendendo <span>Azure (AKS)</span></h1>
+    <p class="subtitle">A jornada para orquestrar contêineres nas nuvens!</p>
+</div>
+
+<div class="illustration-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600">
+        <defs>
+            <linearGradient id="rocketBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#e6e6e6;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#ffffff;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#d4d4d4;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="fireGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#ffeb3b;stop-opacity:1" /> <stop offset="60%" style="stop-color:#ff9800;stop-opacity:1" /> <stop offset="100%" style="stop-color:#f44336;stop-opacity:0" /> </linearGradient>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+        </defs>
+
+        <g filter="url(#glow)">
+            <path fill="url(#fireGrad)" d="M230,480 Q250,580 270,480 Q250,520 230,480 Z">
+                <animate attributeName="d" values="M230,480 Q250,580 270,480 Q250,520 230,480 Z; M235,480 Q250,600 265,480 Q250,530 235,480 Z; M230,480 Q250,580 270,480 Q250,520 230,480 Z" dur="0.5s" repeatCount="indefinite"/>
+            </path>
+            <path fill="orange" d="M240,480 Q250,540 260,480 Z">
+                <animate attributeName="d" values="M240,480 Q250,540 260,480 Z; M242,480 Q250,560 258,480 Z; M240,480 Q250,540 260,480 Z" dur="0.3s" repeatCount="indefinite"/>
+            </path>
+        </g>
+
+        <g id="rocket">
+            <path d="M180,380 L130,450 L180,430 Z" fill="#0078D4"/> <path d="M320,380 L370,450 L320,430 Z" fill="#005a9e"/> <path d="M250,380 L220,480 L280,480 Z" fill="#004275"/> <path d="M250,50 C150,150 150,350 180,450 L320,450 C350,350 350,150 250,50 Z" fill="url(#rocketBodyGrad)"/>
+
+            <ellipse cx="250" cy="450" rx="70" ry="15" fill="#a0a0a0"/>
+            <ellipse cx="250" cy="450" rx="60" ry="10" fill="#333"/>
+
+            <circle cx="250" cy="200" r="40" fill="#0078D4" stroke="#005a9e" stroke-width="5"/>
+            <circle cx="250" cy="200" r="30" fill="#80dfff" opacity="0.5"/> <g transform="translate(210, 280) scale(1.5)">
+            <path d="M 10.3,1.1 0.4,20.9 6.8,19.6 11.5,7.2 13.2,12 6.4,27.3 12.8,29.1 25.5,0.9 Z" fill="#0078D4"/>
+        </g>
+            <text x="250" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="24" fill="#0078D4" letter-spacing="2">AZURE</text>
+        </g>
+
+        <g id="hanger-on" transform="translate(135, 420) rotate(15)">
+            <path d="M30,-20 Q 40,0 45,20" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+            <g transform="translate(45, 20)">
+                <circle cx="0" cy="0" r="15" fill="white" stroke="#0078D4" stroke-width="2"/>
+                <ellipse cx="0" cy="2" rx="10" ry="6" fill="#333"/>
